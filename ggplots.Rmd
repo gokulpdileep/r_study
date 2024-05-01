@@ -4,27 +4,40 @@ author: "gokul"
 date: "2024-05-01"
 output: html_document
 ---
+library(tidyverse)
+library(readxl)
+library(here)
+ca_np <- read_csv(here("data", "ca_np.csv"))
+install.packages("here")
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-## R Markdown
+library(here)
+ca_np <- read_csv(here("data", "ca_np.csv"))
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+ci_np <- read_excel(here("data", "ci_np.xlsx"))
+names(ci_np)
+head(ci_np)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+ggplot(data= ci_np, aes(x=year, y= visitors)) + geom_line()
 
-```{r cars}
-summary(cars)
-```
+gg_base <- ggplot(data= ci_np, aes(x=year, y= visitors))
 
-## Including Plots
+gg_base + geom_point()
 
-You can also embed plots, for example:
+gg_base + geom_col()
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+gg_base + geom_area()
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+gg_base + geom_line(color = "purple", linetype = "dashed" )
+
+
+gg_base + geom_point(color = "purple",pch = 15, size = 4, alpha = 0.6)
+
+
+gg_base + geom_point(aes(size = visitors, color = visitors), alpha = 0.6)
+
+gg_base + geom_col(aes(fill = visitors))
+
+

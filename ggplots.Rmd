@@ -40,4 +40,7 @@ gg_base + geom_point(aes(size = visitors, color = visitors), alpha = 0.6)
 
 gg_base + geom_col(aes(fill = visitors))
 
+gg_base + geom_point(aes(size=visitors,color=visitors), alpha = 0.6)+ theme_light()
 
+ggbase
+git status

@@ -89,6 +89,24 @@ for_plotting <- lobsters %>%
   group_by(site, year) %>%
   summarize(count_by_site = n(), median_size_mm = median(size_mm, na.rm = TRUE))
 
-ggplot(data = for_plotting, aes(x= year , y = median_size_mm, color = site)) + geom_col() + facet_wrap(~site)
+ggplot(data = for_plotting, aes(x= year , y = median_size_mm, color = site)) + geom_col(aes(color = site),fill = "purple") + facet_wrap(~site)
 ```
 ggsave(here("figures","lobsters.jpg"), dpi = 800)
+
+
+```{r}
+lobsters %>%
+  mutate(size_m = size_mm/ 1000)
+```
+```{r}
+lobsters_detailed <- lobsters %>%
+  mutate(size_m = size_mm / 1000, millenia = 2000, observer = "allison horst")
+
+lobsters_detailed
+
+```
+```{r}
+lobsters_detailed %>%
+  select(date, site, size_m)
+```
+

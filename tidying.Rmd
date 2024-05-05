@@ -1,0 +1,87 @@
+---
+title: "tidying"
+author: "gokul"
+date: "2024-05-03"
+output: html_document
+---
+
+```{r}
+# Attach packages
+library(tidyverse)
+library(janitor)
+library(here)
+library(readxl)
+install.packages("janitor")
+```
+library(janitor)
+
+```{r}
+inverts <- read_excel(here("data", "inverts.xlsx"))
+```
+library(readxl)
+
+inverts <- read_excel(here("data", "inverts.xlsx"))
+
+library(here)
+inverts <- read_excel(here("data", "inverts.xlsx"))
+
+
+```{r}
+view(inverts)
+names(inverts)
+summary(inverts)
+```
+view(inverts)
+
+
+```{r}
+inverts_long <- pivot_longer(data = inverts, cols = "2016" : "2018", names_to = "year", values_to = "sp_count")
+
+inverts_long
+```
+view(inverts_long)
+view(inverts)
+
+```{r}
+class(inverts_long$year)
+```
+```{r}
+inverts_long <- inverts_long %>%
+  mutate(year = as.numeric(year))
+
+
+inverts_wide <- inverts_long %>%
+  pivot_wider(names_from = common_name, values_from = sp_count)
+
+
+inverts_wide
+view(inverts_wide)
+
+inverts_wide <- inverts_wide %>%
+  clean_names()
+
+inverts_unite <- inverts_long %>%
+  unite(col = "site_year", c(site,year), sep = "_")
+
+
+view(inverts_unite)
+
+
+inverts_moyr <- inverts_long %>%
+  unite(col = "mo_yr", c(month, year), sep = " hello ")
+
+view(inverts_moyr)
+
+
+
+
+inverts_sep <- inverts_unite %>%
+  tidyr::separate(site_year, into = c("my _site","my_year"))
+view(inverts_sep)
+
+
+ca_abbr <- inverts %>%
+  mutate( common_name = str_replace(common_name, pattern = "california",replacement = "CA"))
+view(ca_abbr)
+```
+

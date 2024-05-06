@@ -5,4 +5,78 @@ date: "2024-05-06"
 output: html_document
 ---
 
+```{r}
+library(tidyverse)
+library(readxl)
+library(here) 
+library(kableExtra)
+```
+```{r}
+
+fish <- read_csv(here("data", "fish.csv"))
+kelp_abur <- read_excel(here("data", "kelp.xlsx"), sheet = "abur")
+
+
+view(kelp_abur)
+
+view(fish)
+
+fish_garibaldi <- fish %>%
+  filter(common_name == "garibaldi")
+
+view(fish_garibaldi)
+
+fish_mohk <- fish %>%
+  filter(site == "mohk")
+view(fish_mohk)
+
+fish_over50 <- fish %>%
+  filter(total_count >= 50)
+view(fish_over50)
+
+fish_3sp <- fish %>%
+  filter(common_name == "garibaldi" | common_name == "blacksmith" | common_name == "black surfperch")
+view(fish_3sp)
+
+fish_3sp <- fish %>%
+  filter(common_name %in% c("garibaldi", "blacksmith", "black surfperh"))
+view(fish_3sp)
+
+fish_gar_2016 <- fish %>%
+  filter(common_name == "garibaldi" | year == 2016)
+view(fish_gar_2016)
+
+aque_2018 <- fish %>%
+  filter(year== 2018 , site == "aque")
+view(aque_2018)
+
+low_gb_wr <- fish %>%
+  filter(common_name %in% c("garibaldi", "rock wrasse")) %>%
+  filter(total_count<=10)
+view(low_gb_wr)
+
+fish_bl <- fish %>%
+  filter(str_detect(common_name, pattern = "black"))
+view(fish_bl)
+
+abur_kelp_fish <- kelp_abur %>%
+  full_join(fish, by = c("year", "site"))
+view(abur_kelp_fish)
+
+view(kelp_abur)
+
+kable(fish)
+view(fish)
+
+fish %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "striped", full_width =  FALSE)
+
+
+
+
+
+
+
+```
 
